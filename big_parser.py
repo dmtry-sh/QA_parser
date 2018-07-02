@@ -18,7 +18,7 @@ def get_answer_link(url):
 	else:
 		return BASE_URL + a_tag.attrs['href']
 
-
+# парсит текст лучшего ответа
 def find_best_answer(url):
 	r = requests.get(url)
 	content = r.content.decode('utf-8')
