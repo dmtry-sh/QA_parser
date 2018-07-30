@@ -6,7 +6,7 @@ from openpyxl.styles import PatternFill
 def parse(document_name, sheet_name, A_last):
     wb = openpyxl.load_workbook(filename = 'documents/{}.xlsx'.format(document_name))
     sheet = wb[sheet_name]
-
+    
     fill_yellow = PatternFill(fill_type='solid',
                    start_color='FFFF00',
                    end_color='FFFF00')
@@ -20,7 +20,12 @@ def parse(document_name, sheet_name, A_last):
     i = 2
     for query in vals:
         print('Парсер mail: обрабатывается {} запрос'.format(i-1))
-        answers = parse_answers_mail(br, query)
+        try:
+            answers = parse_answers_mail(br, query)
+        except:
+            print('Парсер mail: произошла ошибка при обработке {} запроса.'.format(i-1))
+            i += 1
+            continue
         for one in answers:
             j = 2
             for an in one:
@@ -35,14 +40,12 @@ def parse(document_name, sheet_name, A_last):
     print('Парсер mail: сохранено в файл {}_answers.xlsx'.format(document_name)) 
     wb.save('answers/{}_answers.xlsx'.format(document_name))
     close_browser(br)
-    
 
-doc_name = input('Введите название документа: ')
-sheet_name = input('Введите название рабочего листа: ')
-num = int(input('Введите номер последнего запроса из таблицы: '))
-try:
+if __name__ == '__main__':
+    doc_name = input('Введите название документа: ')
+    sheet_name = input('Введите название рабочего листа: ')
+    num = int(input('Введите номер последнего запроса из таблицы: '))
+
     parse(doc_name, sheet_name, num)
     sleep = input('Для закрытия нажмите любую клавишу')
-except Exception as err:
-    print(err)
 
