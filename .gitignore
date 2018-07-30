@@ -1,0 +1,6 @@
+*.json
+answers/Potrebitelskiy_kredit_answers.xlsx
+*.xlsx
+geckodriver.exe
+*.log
+*.pyc
