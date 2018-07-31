@@ -30,8 +30,12 @@ def parse(document_name, sheet_name, A_last):
             j = 2
             for an in one:
                 sheet.cell(row=i, column=j).fill = fill_yellow
-                sheet.cell(row=i, column=j).value = an
-                j += 1
+                try:
+                    sheet.cell(row=i, column=j).value = an
+                    j += 1
+                except:
+                    sheet.cell(row=i, column=j).value = ' '
+                    j += 1
         i += 1
         if (i-2) % 5 == 0:
             print('Парсер mail: сохраняю')
